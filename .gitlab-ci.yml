@@ -1,0 +1,22 @@
+image: node:latest
+
+pages:
+  stage: deploy
+
+  cache:
+    paths:
+      - node_modules/
+
+  script:
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Building the application..."
+    - npm run build
+    - mv build public
+
+  artifacts:
+    paths:
+      - public
+      
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
