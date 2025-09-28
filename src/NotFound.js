@@ -14,7 +14,7 @@ function NotFound() {
       </div>
       
       <div className="not-found-image">
-        <img src="/404.png" alt="404 Not Found" />
+        <img src={`${process.env.PUBLIC_URL}/404.png`} alt="404 Not Found" />
       </div>
     </div>
   );

@@ -175,7 +175,7 @@ export default function Github() {
                                 }
                                 }
                             }}
-                            dangerouslySetInnerHTML={{ __html: `<span class=\"line-number\">${i + 1}</span><span class=\"line-text\">${lineHtml || '&nbsp;'}</span>` }}
+                            dangerouslySetInnerHTML={{ __html: `<span class="line-number">${i + 1}</span><span class="line-text">${lineHtml || '&nbsp;'}</span>` }}
                             />
                         )
                         })

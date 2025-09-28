@@ -497,7 +497,7 @@ function validateEmail(email) {
 
 // Server-side validation (essential)
 function sanitizeInput(input) {
-    return input.replace(/[<>\"'&]/g, function(match) {
+    return input.replace(/[<>"'&]/g, function(match) {
         return {
             '<': '&lt;',
             '>': '&gt;',
