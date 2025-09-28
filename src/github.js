@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import hljs from 'highlight.js'
 import "./github.css"
 
@@ -27,9 +27,34 @@ export default function Github() {
     const [anchorLine, setAnchorLine] = useState(null)
     const [dragging, setDragging] = useState(false)
 
+    const fetchContents = useCallback(async (p, ownerParam = owner, repoParam = repo) => {
+        setLoading(true)
+        setError(null)
+        setFileContent(null)
+        try {
+            const url = `https://api.github.com/repos/${ownerParam}/${repoParam}/contents/${p}`
+            const res = await fetch(url)
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            const data = await res.json()
+            if (Array.isArray(data)) { // directory
+                setItems(data)
+                setPath(p)
+            } else if (data.type === 'file') {
+                setFileContent({ name: data.name, content: atob(data.content.replace(/\n/g, '')) })
+                setSelectedRange(null)
+                setAnchorLine(null)
+                setDragging(false)
+            }
+        } catch (e) {
+            setError(e.message)
+        } finally {
+            setLoading(false)
+        }
+    }, [owner, repo])
+
     useEffect(() => {
         fetchContents('')
-    }, [])
+    }, [fetchContents])
 
     // finish drag event
     useEffect(() => {
@@ -126,31 +151,6 @@ export default function Github() {
     const handleSearchKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleSearch()
-        }
-    }
-
-    async function fetchContents(p, ownerParam = owner, repoParam = repo) {
-        setLoading(true)
-        setError(null)
-        setFileContent(null)
-        try {
-            const url = `https://api.github.com/repos/${ownerParam}/${repoParam}/contents/${p}`
-            const res = await fetch(url)
-            if (!res.ok) throw new Error(`HTTP ${res.status}`)
-            const data = await res.json()
-            if (Array.isArray(data)) { // directory
-                setItems(data)
-                setPath(p)
-            } else if (data.type === 'file') {
-                setFileContent({ name: data.name, content: atob(data.content.replace(/\n/g, '')) })
-                setSelectedRange(null)
-                setAnchorLine(null)
-                setDragging(false)
-            }
-        } catch (e) {
-            setError(e.message)
-        } finally {
-            setLoading(false)
         }
     }
 
