@@ -50,11 +50,10 @@ function App() {
                   <Link to="/resources/club">Club Resources</Link>
                 </div>
               </div>
-              <Link to="/github">Github</Link>
+              <Link to="/github">GitHub</Link>
               <Link to="/calendar">Calendar</Link>
               <Link to="/meeting-notes">Meeting Notes</Link>
               <Link to="/eboard-login">Eboard Login</Link>
-              <Link to="/github">GitHub</Link>
             </div>
           </div>
           <Link to="/" className="header-title">Stevens Cyber Defense Team</Link>
