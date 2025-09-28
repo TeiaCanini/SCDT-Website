@@ -1,24 +1,419 @@
-:root{--bg:#0f1724;--card:#0b1220;--accent:#60a5fa;--muted:#94a3b8;--text:#e6eef8}
-html,body,#root{height:100%}
-body{margin:0;font-family:Inter, Arial, sans-serif;color:var(--text)}
-.title{text-align:center;padding:18px 0;margin:0}
-.container{display:flex;max-width:1100px;margin:20px auto;background:rgba(255,255,255,0.02);border-radius:8px;overflow:hidden;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-.sidebar{width:320px;padding:16px;border-right:1px solid rgba(255,255,255,0.03)}
-.main{flex:1;padding:18px}
-.list{margin-top:12px}
-.item{margin:6px 0}
-.link{background:none;border:none;color:var(--text);text-align:left;padding:6px 8px;border-radius:6px;cursor:pointer}
-.link:hover{background:rgba(255,255,255,0.02)}
-.file-content{white-space:pre-wrap;background:rgba(255,255,255,0.02);padding:12px;border-radius:6px;max-height:70vh;overflow:auto}
-.file-view{display:flex}
-.code-line{display:flex}
-.line-number{width:56px;flex:0 0 56px;text-align:right;padding-right:12px;color:var(--muted);user-select:none}
-.line-text{white-space:pre-wrap;flex:1}
-.file-content .hljs { background: transparent; }
-.file-content .hljs, .file-content .hljs * { color: inherit; }
-.code-line.selected{background:linear-gradient(90deg, rgba(96,165,250,0.12), rgba(96,165,250,0.06));}
-.code-line:focus{outline:2px solid rgba(96,165,250,0.18);}
-.dragging .code-line{user-select:none}
-.muted{color:var(--muted);padding:12px}
-.error{color:#ffb4b4;background:#300; padding:8px;border-radius:6px}
-.footer{text-align:center;font-size:12px;color:var(--muted);padding:12px}
+/* Enhanced GitHub Files Viewer Styling */
+:root {
+  --github-bg: #0d1117;
+  --github-card: #161b22;
+  --github-border: #30363d;
+  --github-accent: #58a6ff;
+  --github-accent-hover: #79c0ff;
+  --github-muted: #8b949e;
+  --github-text: #f0f6fc;
+  --github-text-secondary: #c9d1d9;
+  --github-success: #3fb950;
+  --github-warning: #d29922;
+  --github-danger: #f85149;
+  --github-sidebar: #21262d;
+  --github-hover: rgba(177, 186, 196, 0.12);
+  --github-selection: rgba(88, 166, 255, 0.15);
+  --github-selection-border: rgba(88, 166, 255, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  background-color: var(--github-bg);
+  color: var(--github-text);
+  line-height: 1.5;
+}
+
+/* Title Styling */
+.github .title {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--github-text);
+  background: linear-gradient(135deg, var(--github-accent), var(--github-accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Main Container */
+.github .container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  background: var(--github-card);
+  border: 1px solid var(--github-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 16px 32px rgba(1, 4, 9, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  min-height: 600px;
+}
+
+/* Sidebar Styling */
+.github .sidebar {
+  width: 350px;
+  background: var(--github-sidebar);
+  border-right: 1px solid var(--github-border);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.github .sidebar h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--github-text);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--github-border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github .sidebar h2::before {
+  content: '📁';
+  font-size: 1.1rem;
+}
+
+/* Breadcrumb Navigation */
+.github .breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--github-bg);
+  border-radius: 8px;
+  border: 1px solid var(--github-border);
+}
+
+.github .breadcrumbs button {
+  background: none;
+  border: none;
+  color: var(--github-accent);
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.github .breadcrumbs button:hover {
+  background: var(--github-hover);
+  color: var(--github-accent-hover);
+}
+
+/* File List */
+.github .list {
+  margin-top: 1rem;
+}
+
+.github .item {
+  margin: 0.25rem 0;
+}
+
+.github .link {
+  background: none;
+  border: none;
+  color: var(--github-text-secondary);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.github .link:hover {
+  background: var(--github-hover);
+  color: var(--github-text);
+  transform: translateX(4px);
+}
+
+.github .link:focus {
+  outline: 2px solid var(--github-accent);
+  outline-offset: -2px;
+}
+
+/* Main Content Area */
+.github .main {
+  flex: 1;
+  padding: 1.5rem;
+  background: var(--github-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* File Header */
+.github .file-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--github-card);
+  border: 1px solid var(--github-border);
+  border-radius: 8px;
+  gap: 1rem;
+}
+
+.github .file-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--github-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github .file-header h3::before {
+  content: '📄';
+  font-size: 1rem;
+}
+
+/* Copy Button */
+.github .copy-button {
+  background: var(--github-accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github .copy-button:hover:not(:disabled) {
+  background: var(--github-accent-hover);
+  transform: translateY(-1px);
+}
+
+.github .copy-button:disabled {
+  background: var(--github-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.github .copy-button::before {
+  content: '📋';
+  font-size: 0.875rem;
+}
+
+/* File Content Container */
+.github .file-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--github-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--github-card);
+}
+
+/* Code Content */
+.github .file-content {
+  flex: 1;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  background: var(--github-bg);
+  overflow: auto;
+  max-height: 70vh;
+  scrollbar-width: thin;
+  scrollbar-color: var(--github-border) transparent;
+}
+
+.github .file-content::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.github .file-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.github .file-content::-webkit-scrollbar-thumb {
+  background: var(--github-border);
+  border-radius: 6px;
+  border: 2px solid var(--github-bg);
+}
+
+.github .file-content::-webkit-scrollbar-thumb:hover {
+  background: var(--github-muted);
+}
+
+/* Code Lines */
+.github .code-line {
+  display: flex;
+  align-items: flex-start;
+  min-height: 1.5rem;
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.github .code-line:hover {
+  background: rgba(177, 186, 196, 0.06);
+}
+
+.github .code-line.selected {
+  background: var(--github-selection);
+  border-left: 3px solid var(--github-accent);
+}
+
+.github .code-line:focus {
+  outline: 2px solid var(--github-selection-border);
+  outline-offset: -2px;
+}
+
+/* Line Numbers */
+.github .line-number {
+  width: 60px;
+  flex: 0 0 60px;
+  text-align: right;
+  padding: 0 1rem 0 0.5rem;
+  color: var(--github-muted);
+  user-select: none;
+  font-weight: 400;
+  border-right: 1px solid var(--github-border);
+  background: var(--github-sidebar);
+}
+
+/* Line Text */
+.github .line-text {
+  flex: 1;
+  padding: 0 1rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Syntax Highlighting Override */
+.github .file-content .hljs {
+  background: transparent;
+  color: var(--github-text-secondary);
+}
+
+/* Drag State */
+.github .dragging .code-line {
+  user-select: none;
+}
+
+/* Status Messages */
+.github .muted {
+  color: var(--github-muted);
+  padding: 2rem;
+  text-align: center;
+  font-style: italic;
+  background: var(--github-card);
+  border-radius: 8px;
+  border: 1px dashed var(--github-border);
+}
+
+.github .error {
+  color: var(--github-danger);
+  background: rgba(248, 81, 73, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(248, 81, 73, 0.3);
+  margin: 1rem 0;
+}
+
+/* Selection Counter */
+.github .selection-info {
+  padding: 0.75rem 1rem;
+  background: var(--github-card);
+  border-top: 1px solid var(--github-border);
+  color: var(--github-muted);
+  font-size: 0.8125rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.github .selection-info .selection-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github .selection-info .selection-count::before {
+  content: '🔢';
+  font-size: 0.75rem;
+}
+
+/* Loading Animation */
+.github .loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--github-muted);
+}
+
+.github .loading::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--github-border);
+  border-top: 2px solid var(--github-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .github .container {
+    flex-direction: column;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .github .sidebar {
+    width: 100%;
+    max-height: 300px;
+  }
+  
+  .github .title {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .github .file-content {
+    font-size: 0.8125rem;
+  }
+  
+  .github .line-number {
+    width: 50px;
+    flex: 0 0 50px;
+  }
+}

@@ -82,21 +82,25 @@ export default function Github() {
             <aside className="sidebar">
             <h2>{owner}/{repo}</h2>
             <div className="breadcrumbs">
-                <button onClick={() => fetchContents('')}>root</button>
+                <button onClick={() => fetchContents('')}>🏠 root</button>
                 {path && path.split('/').map((part, idx, arr) => {
                 const sub = arr.slice(0, idx + 1).join('/')
                 return <button key={sub} onClick={() => fetchContents(sub)} className="crumb">/{part}</button>
                 })}
             </div>
             <div className="list">
-                {loading && <div className="muted">Loading...</div>}
-                {error && <div className="error">{error}</div>}
+                {loading && <div className="loading muted">Loading repository contents...</div>}
+                {error && <div className="error">⚠️ Error: {error}</div>}
                 {items.map(item => (
                 <div key={item.path} className="item">
                     {item.type === 'dir' ? (
-                    <button onClick={() => fetchContents(item.path)} className="link">📁 {item.name}</button>
+                    <button onClick={() => fetchContents(item.path)} className="link">
+                        📁 {item.name}
+                    </button>
                     ) : (
-                    <button onClick={() => fetchContents(item.path)} className="link">📄 {item.name}</button>
+                    <button onClick={() => fetchContents(item.path)} className="link">
+                        📄 {item.name}
+                    </button>
                     )}
                 </div>
                 ))}
@@ -105,11 +109,16 @@ export default function Github() {
             <main className="main">
             {fileContent ? (
                 <div>
-                <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                <div className="file-header">
                     <h3>{fileContent.name}</h3>
-                    <div>
-                    <button onClick={copySelection} disabled={!selectedRange}>Copy selection</button>
-                    </div>
+                    <button 
+                        className="copy-button" 
+                        onClick={copySelection} 
+                        disabled={!selectedRange}
+                        title={selectedRange ? `Copy ${selectedLinesContents.length} selected lines` : 'Select lines to copy'}
+                    >
+                        Analyze with AI
+                    </button>
                 </div>
                 <div className="file-view">
                     <div className="file-content" role="region" aria-label={`Contents of ${fileContent.name}`}>
@@ -184,9 +193,25 @@ export default function Github() {
                 </div>
                 </div>
             ) : (
-                <div className="muted">Select a file to view its contents.</div>
+                <div className="muted">
+                    👈 Select a file from the sidebar to view its contents
+                    <br /><br />
+                    <strong>Repository:</strong> {owner}/{repo}<br />
+                    <strong>Description:</strong> Malware persistence demonstration for educational purposes
+                </div>
             )}
-            <div style={{marginTop:12}} className="muted">Selected lines: {selectedLinesContents.length}</div>
+            {fileContent && (
+                <div className="selection-info">
+                    <div className="selection-count">
+                        Selected lines: {selectedLinesContents.length}
+                    </div>
+                    {selectedRange && (
+                        <div style={{fontSize: '0.75rem', opacity: 0.8}}>
+                            Lines {selectedRange.start + 1}-{selectedRange.end + 1}
+                        </div>
+                    )}
+                </div>
+            )}
             </main>
             </div>
         </div>
