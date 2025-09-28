@@ -6,6 +6,7 @@ import Resources from './Resources';
 import Calendar from './Calendar';
 import MeetingNotes from './Meeting-Notes';
 import EboardLogin from './Eboard-Login';
+import Github from './github';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Link to="/calendar">Calendar</Link>
               <Link to="/meeting-notes">Meeting Notes</Link>
               <Link to="/eboard-login">Eboard Login</Link>
+              <Link to="/github">GitHub</Link>
             </div>
           </div>
           <Link to="/" className="header-title">Stevens Cyber Defense Team</Link>
@@ -37,6 +39,7 @@ function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
             <Route path="/eboard-login" element={<EboardLogin />} />
+            <Route path="/github" element={<Github />} />
           </Routes>
         </main>
       </div>
