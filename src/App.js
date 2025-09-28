@@ -8,7 +8,6 @@ import ClubResources from './Club-Resources';
 import Calendar from './Calendar';
 import MeetingNotes from './Meeting-Notes';
 import EboardLogin from './Eboard-Login';
-import Github from './github';
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true); // Default to dark theme
