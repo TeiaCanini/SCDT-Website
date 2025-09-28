@@ -1,35 +1,68 @@
-name: Deploy to GitHub Pages
+# Name of the workflow
+name: Deploy React App to GitHub Pages
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push events but only for the "main" branch
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  # Allows you to run this workflow manually from the Actions tab on GitHub
+  workflow_dispatch:
 
+# Set the permissions for the GITHUB_TOKEN for this workflow
+permissions:
+  contents: read # Allows checkout of the repository
+  pages: write    # Allows deployment to GitHub Pages
+  id-token: write # Allows OIDC authentication with the deployment provider
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build-and-deploy:
+  # This job builds the React application
+  build:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build
-      run: npm run build
-      
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
-        cname: sitcyberattack.tech
+      # Step 1: Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Sets up Node.js in the runner
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use Node.js version 20
+          cache: 'npm'       # Enable caching for npm
+
+      # Step 3: Installs project dependencies. 
+      # Using 'npm install' because a lockfile may not be present.
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Builds the application for production
+      # The PUBLIC_URL is set for correct asset paths on GitHub Pages
+      - name: Build project
+        run: npm run build
+        env:
+          PUBLIC_URL: /${{ github.event.repository.name }}
+
+      # Step 5: Uploads the build artifact for the deployment job
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+
+  # This job deploys the application to GitHub Pages
+  deploy:
+    # Requires the 'build' job to complete successfully
+    needs: build
+    runs-on: ubuntu-latest
+    # Specifies the environment for deployment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Step 1: Deploys the artifact to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
