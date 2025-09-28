@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
+import Github from './github';
 import Resources from './Resources';
 import Calendar from './Calendar';
 import MeetingNotes from './Meeting-Notes';
@@ -19,6 +20,7 @@ function App() {
             <div className="dropdown-nav-content">
               <Link to="/">Home</Link>
               <Link to="/resources">Resources</Link>
+              <Link to="/github">Github</Link>
               <Link to="/calendar">Calendar</Link>
               <Link to="/meeting-notes">Meeting Notes</Link>
               <Link to="/eboard-login">Eboard Login</Link>
@@ -34,6 +36,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/github" element={<Github/>} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
             <Route path="/eboard-login" element={<EboardLogin />} />
