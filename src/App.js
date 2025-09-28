@@ -7,6 +7,7 @@ import Resources from './Resources';
 import ClubResources from './Club-Resources';
 import ArticleView from './ArticleView';
 import Analytics from './Analytics';
+import NotFound from './NotFound';
 import Calendar from './Calendar';
 import MeetingNotes from './Meeting-Notes';
 import EboardLogin from './Eboard-Login';
@@ -79,6 +80,8 @@ function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
             <Route path="/eboard-login" element={<EboardLogin />} />
+            {/* Catch-all route for 404 pages */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>

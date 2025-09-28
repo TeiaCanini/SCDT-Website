@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import NotFound from './NotFound';
 import './App.css';
 
 function ArticleView() {
@@ -733,15 +734,7 @@ Stay updated with the latest security threats and best practices through resourc
   }
 
   if (!article) {
-    return (
-      <div className="article-not-found">
-        <h1>Article Not Found</h1>
-        <p>The article you're looking for doesn't exist.</p>
-        <Link to="/resources/club" className="back-link">
-          ← Back to Articles
-        </Link>
-      </div>
-    );
+    return <NotFound />;
   }
 
   return (
