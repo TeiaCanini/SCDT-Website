@@ -1,6 +1,6 @@
-:root{--bg:#010305;--card:#0b1220;--accent:#60a5fa;--muted:#94a3b8;--text:#e6eef8}
+:root{--bg:#0f1724;--card:#0b1220;--accent:#60a5fa;--muted:#94a3b8;--text:#e6eef8}
 html,body,#root{height:100%}
-body{margin:0;font-family:Inter, Arial, sans-serif;background:linear-gradient(180deg,#081127 0%, #071226 100%);color:var(--text)}
+body{margin:0;font-family:Inter, Arial, sans-serif;color:var(--text)}
 .title{text-align:center;padding:18px 0;margin:0}
 .container{display:flex;max-width:1100px;margin:20px auto;background:rgba(255,255,255,0.02);border-radius:8px;overflow:hidden;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
 .sidebar{width:320px;padding:16px;border-right:1px solid rgba(255,255,255,0.03)}
