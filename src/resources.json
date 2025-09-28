@@ -1,0 +1,38 @@
+{
+    "resources":[
+        {
+            "type": "github",
+            "github": {
+                "owner": "NotReallyJustin",
+                "repo": "ILY-Persistence-Demo"
+            }, 
+            "flags": ["powershell", "malware", "persistence", "windows"], 
+            "difficulty": "intermediate"
+        }, 
+        {
+            "type": "youtube", 
+            "youtube": {
+                "link": "https://youtu.be/DdVC1eVfZUI?si=BG9MwSWz9cmo7-Oe"
+
+            },
+            "flags": ["reverse engineering", "malware", "ransomware"], 
+            "difficulty": "hard"
+        }, 
+        {
+            "type": "ctf", 
+            "ctf": {
+                "link": "https://pwn.college/linux-luminarium/"
+            },
+            "flags": ["linux", "bash"], 
+            "difficulty": "easy"
+        }, 
+        {
+            "type": "article", 
+            "article": {
+                "link": "https://www.sans.org/blog/ten-steps-to-incident-response/"
+            },
+            "flags": ["incident response", "forensics"], 
+            "difficulty": "easy"
+        }
+    ]
+}
