@@ -5,6 +5,8 @@ import Home from './Home';
 import Github from './github';
 import Resources from './Resources';
 import ClubResources from './Club-Resources';
+import ArticleView from './ArticleView';
+import Analytics from './Analytics';
 import Calendar from './Calendar';
 import MeetingNotes from './Meeting-Notes';
 import EboardLogin from './Eboard-Login';
@@ -72,11 +74,12 @@ function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/general" element={<Resources />} />
             <Route path="/resources/club" element={<ClubResources />} />
+            <Route path="/resources/club/:articleId" element={<ArticleView />} />
+            <Route path="/resources/club/analytics" element={<Analytics />} />
             <Route path="/github" element={<Github/>} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/meeting-notes" element={<MeetingNotes />} />
             <Route path="/eboard-login" element={<EboardLogin />} />
-            <Route path="/github" element={<Github />} />
           </Routes>
         </main>
       </div>
