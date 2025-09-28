@@ -9,6 +9,7 @@ function App() {
             <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-nav-content">
+            <a href="Home.js">Home</a>
             <a href="Resources.js">Resources</a>
             <a href="Calendar.js">Calendar</a>
             <a href="Meeting-Notes.js">Meeting Notes</a>
