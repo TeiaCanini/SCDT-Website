@@ -1,22 +1,31 @@
-image: node:latest
+name: Build and Deploy to GitHub Pages
 
-pages:
-  stage: deploy
+on:
+  push:
+    branches:
+      - main
 
-  cache:
-    paths:
-      - node_modules/
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-  script:
-    - echo "Installing dependencies..."
-    - npm install
-    - echo "Building the application..."
-    - npm run build
-    - mv build public
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  artifacts:
-    paths:
-      - public
-      
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' 
+          cache: 'npm' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
