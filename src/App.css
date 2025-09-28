@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -15,13 +16,39 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  padding: 1rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-title {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-title:hover {
+  color: #61dafb;
+}
+
+.SCDT-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.main-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .App-link {
@@ -76,5 +103,256 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Component-specific styles */
+.home-container, .resources-container, .calendar-container, .meeting-notes-container, .login-container, .eboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.home-container h2, .resources-container h2, .calendar-container h2, .meeting-notes-container h2 {
+  color: #282c34;
+  border-bottom: 2px solid #61dafb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Resources page styles */
+.resource-section {
+  margin-bottom: 2rem;
+}
+
+.resource-section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.resource-section li {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-left: 4px solid #61dafb;
+}
+
+.resource-section a {
+  color: #282c34;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.resource-section a:hover {
+  color: #61dafb;
+}
+
+/* Calendar page styles */
+.event-item, .competition-item {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border-left: 4px solid #61dafb;
+}
+
+.event-item h3, .competition-item h3 {
+  margin-top: 0;
+  color: #282c34;
+}
+
+.calendar-note {
+  text-align: center;
+  font-style: italic;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+/* Meeting Notes styles */
+.meeting-note {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  border-left: 4px solid #61dafb;
+}
+
+.meeting-note h2 {
+  margin-top: 0;
+  color: #282c34;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.5rem;
+}
+
+.notes-access {
+  background-color: #e9ecef;
+  padding: 1.5rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Login and Dashboard styles */
+.login-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #282c34;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #61dafb;
+  box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.2);
+}
+
+.login-btn, .logout-btn, .action-btn {
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover, .logout-btn:hover, .action-btn:hover {
+  background-color: #4fa8c5;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.login-info {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+/* Dashboard styles */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #61dafb;
+}
+
+.dashboard-section {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  border-left: 4px solid #61dafb;
+}
+
+.dashboard-section h3 {
+  margin-top: 0;
+  color: #282c34;
+}
+
+.action-list {
+  list-style: none;
+  padding: 0;
+}
+
+.action-list li {
+  margin-bottom: 0.5rem;
+}
+
+.action-btn {
+  width: 100%;
+  text-align: left;
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+}
+
+.activity-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.stat-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #61dafb;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 }
