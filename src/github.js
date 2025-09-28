@@ -1,12 +1,20 @@
 import { useEffect, useState, useMemo } from 'react'
 import hljs from 'highlight.js'
 import "./github.css"
-const owner = 'NotReallyJustin'
-const repo = 'ILY-Persistence-Demo'
+
+const DEFAULT_OWNER = 'NotReallyJustin'
+const DEFAULT_REPO = 'ILY-Persistence-Demo'
 
 export default function Github() {
+    // Repository state
+    const [owner, setOwner] = useState(DEFAULT_OWNER)
+    const [repo, setRepo] = useState(DEFAULT_REPO)
+    const [searchUrl, setSearchUrl] = useState('')
+    const [isSearching, setIsSearching] = useState(false)
+    const [searchError, setSearchError] = useState('')
+    
+    // File navigation state
     const [path, setPath] = useState('')
-    //items are the contents of the current path (files and dirs)
     const [items, setItems] = useState([]) // {name, path, type}
     const [fileContent, setFileContent] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -30,28 +38,119 @@ export default function Github() {
         return () => document.removeEventListener('mouseup', up)
     }, [])
 
-    async function fetchContents(p) {
+    // Parse GitHub URL to extract owner and repo
+    const parseGitHubUrl = (url) => {
+        try {
+            // Handle different GitHub URL formats
+            const patterns = [
+                /github\.com\/([^/]+)\/([^/]+)(?:\/|$)/, // https://github.com/owner/repo
+                /^([^/]+)\/([^/]+)$/, // owner/repo
+            ]
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern)
+                if (match) {
+                    return {
+                        owner: match[1],
+                        repo: match[2].replace(/\.git$/, ''), // Remove .git suffix if present
+                        isValid: true
+                    }
+                }
+            }
+            return { isValid: false, error: 'Invalid GitHub URL format' }
+        } catch (e) {
+            return { isValid: false, error: 'Failed to parse URL' }
+        }
+    }
+
+    // Handle repository search
+    const handleSearch = async () => {
+        if (!searchUrl.trim()) {
+            setSearchError('Please enter a GitHub repository URL')
+            return
+        }
+
+        setIsSearching(true)
+        setSearchError('')
+        
+        const parsed = parseGitHubUrl(searchUrl.trim())
+        
+        if (!parsed.isValid) {
+            setSearchError(parsed.error || 'Invalid repository URL')
+            setIsSearching(false)
+            return
+        }
+
+        // Test if repository exists by fetching its info
+        try {
+            const testUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}`
+            const response = await fetch(testUrl)
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('Repository not found or is private')
+                } else if (response.status === 403) {
+                    throw new Error('API rate limit exceeded. Please try again later.')
+                } else {
+                    throw new Error(`Failed to access repository (${response.status})`)
+                }
+            }
+
+            // Repository exists, switch to it
+            setOwner(parsed.owner)
+            setRepo(parsed.repo)
+            
+            // Clear existing data
+            setPath('')
+            setItems([])
+            setFileContent(null)
+            setError(null)
+            setSelectedRange(null)
+            setAnchorLine(null)
+            setDragging(false)
+            
+            // Fetch root contents of new repository
+            fetchContents('', parsed.owner, parsed.repo)
+            
+            setSearchUrl('') // Clear search input
+            setSearchError('')
+            
+        } catch (e) {
+            setSearchError(e.message)
+        } finally {
+            setIsSearching(false)
+        }
+    }
+
+    // Handle Enter key in search input
+    const handleSearchKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch()
+        }
+    }
+
+    async function fetchContents(p, ownerParam = owner, repoParam = repo) {
         setLoading(true)
         setError(null)
         setFileContent(null)
         try {
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${p}`
-        const res = await fetch(url)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const data = await res.json()
-        if (Array.isArray(data)) { // directory
-            setItems(data)
-            setPath(p)
-        } else if (data.type === 'file') {
-            setFileContent     ({ name: data.name, content: atob(data.content.replace(/\n/g, '')) })
-            setSelectedRange(null)
-            setAnchorLine(null)
-            setDragging(false)
-        }
+            const url = `https://api.github.com/repos/${ownerParam}/${repoParam}/contents/${p}`
+            const res = await fetch(url)
+            if (!res.ok) throw new Error(`HTTP ${res.status}`)
+            const data = await res.json()
+            if (Array.isArray(data)) { // directory
+                setItems(data)
+                setPath(p)
+            } else if (data.type === 'file') {
+                setFileContent({ name: data.name, content: atob(data.content.replace(/\n/g, '')) })
+                setSelectedRange(null)
+                setAnchorLine(null)
+                setDragging(false)
+            }
         } catch (e) {
-        setError(e.message)
+            setError(e.message)
         } finally {
-        setLoading(false)
+            setLoading(false)
         }
     }
 
@@ -77,7 +176,33 @@ export default function Github() {
 
     return (
         <div className="github">
-        <h1 className="title">GitHub Files Viewer</h1>
+        <div className="github-header">
+            <h1 className="title">GitHub Files Viewer</h1>
+            <div className="search-container">
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Enter GitHub URL (e.g., owner/repo or https://github.com/owner/repo)"
+                    value={searchUrl}
+                    onChange={(e) => setSearchUrl(e.target.value)}
+                    onKeyPress={handleSearchKeyPress}
+                    disabled={isSearching}
+                />
+                <button 
+                    className="search-button"
+                    onClick={handleSearch}
+                    disabled={isSearching || !searchUrl.trim()}
+                    title="Search Repository"
+                >
+                    {isSearching ? '🔄' : '🔍'}
+                </button>
+            </div>
+        </div>
+        {searchError && (
+            <div className="search-error">
+                ⚠️ {searchError}
+            </div>
+        )}
         <div className={`container ${dragging ? 'dragging' : ''}`}>
             <aside className="sidebar">
             <h2>{owner}/{repo}</h2>
@@ -206,9 +331,9 @@ export default function Github() {
                         Selected lines: {selectedLinesContents.length}
                     </div>
                     {selectedRange && (
-                        <div style={{fontSize: '0.75rem', opacity: 0.8}}>
-                            Lines {selectedRange.start + 1}-{selectedRange.end + 1}
-                        </div>
+                    <div className="line-range-info">
+                        Lines {selectedRange.start + 1}-{selectedRange.end + 1}
+                    </div>
                     )}
                 </div>
             )}

@@ -52,10 +52,19 @@ html, body, #root {
   min-height: 100vh;
 }
 
+/* Header Container */
+.github .github-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, var(--github-bg) 0%, var(--github-card) 100%);
+  border-bottom: 1px solid var(--github-border);
+}
+
 /* Title Styling */
 .github .title {
-  text-align: center;
-  padding: 2rem 1rem;
   margin: 0;
   font-size: 2rem;
   font-weight: 600;
@@ -72,6 +81,95 @@ html, body, #root {
     color: var(--github-accent);
     background: none;
   }
+}
+
+/* Search Container */
+.github .search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Search Input */
+.github .search-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--github-border);
+  border-radius: 8px;
+  background: var(--github-card);
+  color: var(--github-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.github .search-input:focus {
+  border-color: var(--github-accent);
+  box-shadow: 0 0 0 3px var(--github-selection);
+}
+
+.github .search-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.github .search-input::placeholder {
+  color: var(--github-muted);
+  opacity: 0.8;
+}
+
+/* Search Button */
+.github .search-button {
+  padding: 0.75rem 1rem;
+  background: var(--github-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+}
+
+.github .search-button:hover:not(:disabled) {
+  background: var(--github-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.github .search-button:disabled {
+  background: var(--github-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.github .search-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Search Error */
+.github .search-error {
+  background: rgba(248, 81, 73, 0.1);
+  color: var(--github-danger);
+  border: 1px solid rgba(248, 81, 73, 0.3);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 0 auto 1rem;
+  max-width: 600px;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* Main Container */
@@ -443,6 +541,12 @@ html, body, #root {
   font-size: 0.75rem;
 }
 
+.github .line-range-info {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  color: var(--github-muted);
+}
+
 /* Loading Animation */
 .github .loading {
   display: flex;
@@ -481,9 +585,33 @@ html, body, #root {
     max-height: 300px;
   }
   
+  .github .github-header {
+    padding: 1.5rem 1rem;
+  }
+  
   .github .title {
     font-size: 1.5rem;
-    padding: 1rem;
+  }
+  
+  .github .search-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .github .search-input {
+    font-size: 0.875rem;
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .github .search-button {
+    width: 100%;
+    height: 45px;
+    font-size: 1rem;
+  }
+  
+  .github .search-error {
+    margin: 0 1rem 1rem;
+    font-size: 0.8125rem;
   }
   
   .github .file-content {
