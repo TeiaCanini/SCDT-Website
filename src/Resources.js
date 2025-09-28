@@ -29,8 +29,8 @@ function Resources() {
       <div className="resource-section">
         <h2>Documentation & References</h2>
         <ul>
-          <li><a href="https://owasp.org/"target="_blank" rel="noopener noreferrer">OWASP</a> - Web application security</li>
-          <li><a href="https://www.sans.org/"target="_blank" rel="noopener noreferrer">SANS Institute</a> - Security training and certification</li>
+          <li><a href="https://owasp.org/" target="_blank" rel="noopener noreferrer">OWASP</a> - Web application security</li>
+          <li><a href="https://www.sans.org/" target="_blank" rel="noopener noreferrer">SANS Institute</a> - Security training and certification</li>
           <li><a href="https://cve.mitre.org/" target="_blank" rel="noopener noreferrer">CVE Database</a> - Common vulnerabilities and exposures</li>
           <li><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&CK</a> - Adversarial tactics and techniques</li>
         </ul>
