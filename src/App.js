@@ -14,6 +14,8 @@ import EboardLogin from './Eboard-Login';
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true); // Default to dark theme
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu open state
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false); // Submenu open state
 
   useEffect(() => {
     // Check if user has a saved theme preference
@@ -30,33 +32,104 @@ function App() {
     localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
   }, [isDarkTheme]);
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest('.main-navigation')) {
+        setIsMenuOpen(false);
+        setIsSubmenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMenuOpen]);
+
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setIsSubmenuOpen(false);
+  };
+
+  const toggleSubmenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsSubmenuOpen(!isSubmenuOpen);
   };
 
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <div className="dropdown-nav">
-            <button className="dropbtn">Menu
-              <i className="fa fa-caret-down"></i>
+          <nav className="main-navigation">
+            <button 
+              className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
+              onClick={toggleMenu}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+            >
+              <span className="menu-bar"></span>
+              <span className="menu-bar"></span>
+              <span className="menu-bar"></span>
             </button>
-            <div className="dropdown-nav-content">
-              <Link to="/">Home</Link>
-              <div className="dropdown-submenu">
-                <span className="submenu-title">Resources ▶</span>
-                <div className="submenu-content">
-                  <Link to="/resources/general">General Resources</Link>
-                  <Link to="/resources/club">Club Resources</Link>
+            
+            <div className={`navigation-menu ${isMenuOpen ? 'open' : ''}`}>
+              <Link to="/" className="nav-item" onClick={closeMenu}>
+                <span className="nav-icon">🏠</span>
+                <span className="nav-text">Home</span>
+              </Link>
+              
+              <div className="nav-item-with-submenu">
+                <button 
+                  className={`nav-item submenu-trigger ${isSubmenuOpen ? 'active' : ''}`}
+                  onClick={toggleSubmenu}
+                  aria-expanded={isSubmenuOpen}
+                >
+                  <span className="nav-icon">📚</span>
+                  <span className="nav-text">Resources</span>
+                  <span className={`submenu-indicator ${isSubmenuOpen ? 'rotated' : ''}`}>▼</span>
+                </button>
+                
+                <div className={`submenu ${isSubmenuOpen ? 'visible' : ''}`}>
+                  <Link to="/resources/general" className="submenu-item" onClick={closeMenu}>
+                    <span className="nav-icon">🔗</span>
+                    <span className="nav-text">General Resources</span>
+                  </Link>
+                  <Link to="/resources/club" className="submenu-item" onClick={closeMenu}>
+                    <span className="nav-icon">📄</span>
+                    <span className="nav-text">Club Resources</span>
+                  </Link>
                 </div>
               </div>
-              <Link to="/github">GitHub</Link>
-              <Link to="/calendar">Calendar</Link>
-              <Link to="/meeting-notes">Meeting Notes</Link>
-              <Link to="/eboard-login">Eboard Login</Link>
+              
+              <Link to="/github" className="nav-item" onClick={closeMenu}>
+                <span className="nav-icon">💻</span>
+                <span className="nav-text">GitHub</span>
+              </Link>
+              
+              <Link to="/calendar" className="nav-item" onClick={closeMenu}>
+                <span className="nav-icon">📅</span>
+                <span className="nav-text">Calendar</span>
+              </Link>
+              
+              <Link to="/meeting-notes" className="nav-item" onClick={closeMenu}>
+                <span className="nav-icon">📝</span>
+                <span className="nav-text">Meeting Notes</span>
+              </Link>
+              
+              <Link to="/eboard-login" className="nav-item" onClick={closeMenu}>
+                <span className="nav-icon">👥</span>
+                <span className="nav-text">Eboard Login</span>
+              </Link>
             </div>
-          </div>
+          </nav>
           <Link to="/" className="header-title">Stevens Cyber Defense Team</Link>
           <div className="theme-toggle-container">
             <button onClick={toggleTheme} className="theme-toggle-btn">
