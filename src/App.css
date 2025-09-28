@@ -61,11 +61,11 @@
 }
 
 .dropdown-nav .dropbtn {
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   outline: none;
-  color: white;
-  padding: 14px 16px;
+  color: var(--header-text);
+  padding: 12px 14px;
   background-color: inherit;
   font-family: inherit; 
   margin: 0; 
@@ -74,27 +74,84 @@
 .dropdown-nav-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: var(--bg-secondary);
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
 }
 
 .dropdown-nav-content a {
   float: none;
-  color: black;
+  color: var(--text-primary);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   text-align: left;
+  font-size: 14px;
 }
 
 .dropdown-nav-content a:hover {
-  background-color: #ddd;
+  background-color: var(--bg-tertiary);
+  color: var(--accent-color);
 }
 
 .dropdown-nav:hover .dropdown-nav-content {
   display: block;
+}
+
+/* Submenu styles */
+.dropdown-submenu {
+  position: relative;
+}
+
+.submenu-title {
+  display: block;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  text-align: left;
+}
+
+.submenu-title:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-color);
+}
+
+.submenu-content {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: var(--bg-secondary);
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 2;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+.dropdown-submenu:hover .submenu-content {
+  display: block;
+}
+
+.submenu-content a {
+  float: none;
+  color: var(--text-primary);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-size: 14px;
+}
+
+.submenu-content a:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-color);
 }
 
 @keyframes App-logo-spin {
@@ -137,13 +194,14 @@
 }
 
 .resource-section a {
-  color: #282c34;
+  color: var(--link-color);
   text-decoration: none;
   font-weight: bold;
 }
 
 .resource-section a:hover {
-  color: #61dafb;
+  color: var(--link-hover);
+  text-decoration: underline;
 }
 
 /* Calendar page styles */
@@ -157,7 +215,7 @@
 
 .event-item h3, .competition-item h3 {
   margin-top: 0;
-  color: #282c34;
+  color: var(--text-primary);
 }
 
 .calendar-note {
@@ -180,8 +238,8 @@
 
 .meeting-note h2 {
   margin-top: 0;
-  color: #282c34;
-  border-bottom: 1px solid #dee2e6;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
@@ -280,7 +338,7 @@
 
 .dashboard-section h3 {
   margin-top: 0;
-  color: #282c34;
+  color: var(--text-primary);
 }
 
 .action-list {
@@ -324,15 +382,194 @@
 
 .stat-item h4 {
   margin: 0 0 0.5rem 0;
-  color: #6c757d;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .stat-number {
   font-size: 2rem;
   font-weight: bold;
-  color: #61dafb;
+  color: var(--accent-color);
   margin: 0;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+  color: var(--header-text);
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.1);
+  color: white;
+}
+
+/* Light Theme */
+.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #282c34;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --accent-color: #0066cc;
+  --header-bg: #f8f9fa;
+  --header-text: #282c34;
+  --link-color: #0066cc;
+  --link-hover: #004499;
+}
+
+/* Dark Theme (Default) */
+.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --border-color: #555555;
+  --accent-color: #61dafb;
+  --header-bg: #282c34;
+  --header-text: #ffffff;
+  --link-color: #61dafb;
+  --link-hover: #4fa8c5;
+}
+
+/* Apply theme variables */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.App-header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+.header-title {
+  color: var(--header-text);
+}
+
+.main-content {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.home-container, .resources-container, .club-resources-container, .calendar-container, .meeting-notes-container, .login-container, .eboard-container, .github-container {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.home-container h2, .resources-container h2, .club-resources-container h2, .calendar-container h2, .meeting-notes-container h2, .github-container h2 {
+  color: var(--text-primary);
+}
+
+.resource-section li, .event-item, .competition-item, .meeting-note, .repo-item {
+  background-color: var(--bg-secondary);
+  border-left-color: var(--accent-color);
+  color: var(--text-primary);
+}
+
+.login-form, .dashboard-section {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-group label {
+  color: var(--text-primary);
+}
+
+.form-group input {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.notes-access, .login-info {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.activity-list li {
+  border-bottom-color: var(--border-color);
+}
+
+.stat-item {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* GitHub page specific styles */
+.github-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.github-section {
+  margin-bottom: 2rem;
+}
+
+.repo-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.repo-item {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color);
+}
+
+.repo-item h3 {
+  margin-top: 0;
+  color: var(--text-primary);
+}
+
+.repo-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.repo-link:hover {
+  background-color: #4fa8c5;
+}
+
+.contribution-guidelines ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.contribution-guidelines li {
+  margin-bottom: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 /* Responsive design */
@@ -354,5 +591,26 @@
   
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .theme-toggle-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  /* Mobile submenu adjustments */
+  .submenu-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background-color: var(--bg-tertiary);
+    margin-left: 1rem;
+  }
+  
+  .dropdown-submenu:hover .submenu-content {
+    display: block;
   }
 }
