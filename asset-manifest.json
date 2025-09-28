@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/sitcyberattack.tech/static/css/main.204d92c2.css",
+    "main.js": "/sitcyberattack.tech/static/js/main.06e4a4fd.js",
+    "static/js/453.2cab1271.chunk.js": "/sitcyberattack.tech/static/js/453.2cab1271.chunk.js",
+    "index.html": "/sitcyberattack.tech/index.html",
+    "main.204d92c2.css.map": "/sitcyberattack.tech/static/css/main.204d92c2.css.map",
+    "main.06e4a4fd.js.map": "/sitcyberattack.tech/static/js/main.06e4a4fd.js.map",
+    "453.2cab1271.chunk.js.map": "/sitcyberattack.tech/static/js/453.2cab1271.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.204d92c2.css",
+    "static/js/main.06e4a4fd.js"
+  ]
+}
