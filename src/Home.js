@@ -26,6 +26,19 @@ function Home() {
           Location: To be announced<br />
           Contact: Reach out through resources page for more information
         </p>
+        <div className="join-us-section">
+          <h3>🚀 Ready to Join Us?</h3>
+          <p>Connect with our community and stay updated on all SCDT activities!</p>
+          <a 
+            href="https://discord.com/invite/pAmBhnYSbY" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="discord-join-btn"
+          >
+            <span className="discord-icon">💬</span>
+            Join our Discord Server
+          </a>
+        </div>
       </div>
     </div>
   );

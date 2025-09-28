@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { FaInstagram } from 'react-icons/fa';
 import './App.css';
 import Home from './Home';
 import Github from './github';
@@ -157,6 +158,44 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
+        
+        <footer className="app-footer">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h4>Connect With Us</h4>
+              <div className="footer-links">
+                <a 
+                  href="https://ducklink.stevens.edu/SCDT/club_signup" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  <span className="footer-icon">🦆</span>
+                  Ducklink
+                </a>
+                <a 
+                  href="https://www.instagram.com/stevens_scdt/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  <FaInstagram className="footer-icon instagram-icon" />
+                  Instagram
+                </a>
+                <a 
+                  href="mailto:scdt@stevens.edu"
+                  className="footer-link"
+                >
+                  <span className="footer-icon">📧</span>
+                  scdt@stevens.edu
+                </a>
+              </div>
+            </div>
+            <div className="footer-bottom">
+              <p>&copy; 2025 Stevens Cyber Defense Team. All rights reserved.</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </Router>
   );
