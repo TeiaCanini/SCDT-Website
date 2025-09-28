@@ -1,20 +1,36 @@
-/* Enhanced GitHub Files Viewer Styling */
-:root {
-  --github-bg: #0d1117;
-  --github-card: #161b22;
-  --github-border: #30363d;
-  --github-accent: #58a6ff;
-  --github-accent-hover: #79c0ff;
-  --github-muted: #8b949e;
-  --github-text: #f0f6fc;
-  --github-text-secondary: #c9d1d9;
+/* Enhanced GitHub Files Viewer Styling - Integrated with Main Theme */
+/* Uses main app's CSS variables for consistent theming */
+.github {
+  /* GitHub-specific variables that adapt to the main theme */
+  --github-bg: var(--bg-primary);
+  --github-card: var(--bg-secondary);
+  --github-border: var(--border-color);
+  --github-accent: var(--accent-color);
+  --github-accent-hover: var(--link-hover);
+  --github-muted: var(--text-secondary);
+  --github-text: var(--text-primary);
+  --github-text-secondary: var(--text-secondary);
   --github-success: #3fb950;
   --github-warning: #d29922;
   --github-danger: #f85149;
-  --github-sidebar: #21262d;
+  --github-sidebar: var(--bg-tertiary);
   --github-hover: rgba(177, 186, 196, 0.12);
-  --github-selection: rgba(88, 166, 255, 0.15);
-  --github-selection-border: rgba(88, 166, 255, 0.4);
+  --github-selection: rgba(157, 21, 53, 0.15);
+  --github-selection-border: rgba(157, 21, 53, 0.4);
+}
+
+/* Light theme specific adjustments */
+.light-theme .github {
+  --github-hover: rgba(0, 0, 0, 0.05);
+  --github-selection: rgba(0, 102, 204, 0.15);
+  --github-selection-border: rgba(0, 102, 204, 0.4);
+}
+
+/* Dark theme specific adjustments */
+.dark-theme .github {
+  --github-hover: rgba(177, 186, 196, 0.12);
+  --github-selection: rgba(157, 21, 53, 0.15);
+  --github-selection-border: rgba(157, 21, 53, 0.4);
 }
 
 * {
@@ -27,11 +43,13 @@ html, body, #root {
   padding: 0;
 }
 
-body {
+/* Remove global body styling to prevent conflicts with main app */
+.github {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
   background-color: var(--github-bg);
   color: var(--github-text);
   line-height: 1.5;
+  min-height: 100vh;
 }
 
 /* Title Styling */
@@ -48,6 +66,14 @@ body {
   background-clip: text;
 }
 
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (-webkit-background-clip: text) {
+  .github .title {
+    color: var(--github-accent);
+    background: none;
+  }
+}
+
 /* Main Container */
 .github .container {
   display: flex;
@@ -58,9 +84,23 @@ body {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px var(--github-border);
+  min-height: 600px;
+}
+
+/* Light theme container adjustments */
+.light-theme .github .container {
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px var(--github-border);
+}
+
+/* Dark theme container adjustments */
+.dark-theme .github .container {
+  box-shadow: 
     0 16px 32px rgba(1, 4, 9, 0.85),
     0 0 0 1px rgba(255, 255, 255, 0.05);
-  min-height: 600px;
 }
 
 /* Sidebar Styling */
@@ -277,7 +317,7 @@ body {
 }
 
 .github .code-line:hover {
-  background: rgba(177, 186, 196, 0.06);
+  background: var(--github-hover);
 }
 
 .github .code-line.selected {
@@ -315,6 +355,44 @@ body {
 .github .file-content .hljs {
   background: transparent;
   color: var(--github-text-secondary);
+}
+
+/* Light theme syntax highlighting adjustments */
+.light-theme .github .file-content .hljs {
+  color: var(--text-primary);
+}
+
+.light-theme .github .file-content .hljs-keyword {
+  color: #d73a49;
+}
+
+.light-theme .github .file-content .hljs-string {
+  color: #032f62;
+}
+
+.light-theme .github .file-content .hljs-comment {
+  color: #6a737d;
+}
+
+.light-theme .github .file-content .hljs-number {
+  color: #005cc5;
+}
+
+/* Dark theme syntax highlighting */
+.dark-theme .github .file-content .hljs-keyword {
+  color: #ff7b72;
+}
+
+.dark-theme .github .file-content .hljs-string {
+  color: #a5d6ff;
+}
+
+.dark-theme .github .file-content .hljs-comment {
+  color: #8b949e;
+}
+
+.dark-theme .github .file-content .hljs-number {
+  color: #79c0ff;
 }
 
 /* Drag State */
